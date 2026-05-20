@@ -20,7 +20,7 @@ export class Animales implements OnInit {
   public store = inject(AnimalesStore);
 
   modalAbierto = signal<boolean>(false);
-  columnasAnimal: string[] = ['nombre', 'nombreRaza', 'nombreEspecie', 'nombreSituacion', 'acciones'];
+  columnasAnimal: string[] = ['imagen', 'nombre', 'nombreRaza', 'nombreEspecie', 'nombreSituacion', 'acciones'];
 
   ngOnInit(): void {
     this.cargarAnimales();

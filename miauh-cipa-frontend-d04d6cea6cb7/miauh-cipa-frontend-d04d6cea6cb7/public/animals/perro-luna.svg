@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Luna, perra mestiza</title>
+  <desc id="desc">Ilustracion de una perra canela sobre fondo azul claro.</desc>
+  <rect width="320" height="320" fill="#dbeafe"/>
+  <circle cx="160" cy="168" r="96" fill="#b77945"/>
+  <path d="M82 106c-28 11-38 45-20 75 29-7 50-31 57-65z" fill="#8b5a34"/>
+  <path d="M238 106c28 11 38 45 20 75-29-7-50-31-57-65z" fill="#8b5a34"/>
+  <ellipse cx="122" cy="158" rx="13" ry="17" fill="#111827"/>
+  <ellipse cx="198" cy="158" rx="13" ry="17" fill="#111827"/>
+  <ellipse cx="160" cy="192" rx="24" ry="18" fill="#4b2f1d"/>
+  <path d="M126 221c20 19 48 19 68 0" fill="none" stroke="#4b2f1d" stroke-width="10" stroke-linecap="round"/>
+  <path d="M128 111c17-22 47-28 65-2-24 11-45 11-65 2z" fill="#f3c180"/>
+  <circle cx="117" cy="151" r="4" fill="#fff"/>
+  <circle cx="193" cy="151" r="4" fill="#fff"/>
+</svg>

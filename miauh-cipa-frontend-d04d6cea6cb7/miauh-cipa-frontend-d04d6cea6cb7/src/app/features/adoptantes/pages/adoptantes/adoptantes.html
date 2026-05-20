@@ -8,30 +8,35 @@
     <div class="row">
         <div class="col">
             <mat-card class="premium-table-card">
+                <!-- Herramientas de busqueda y filtro solicitadas en usabilidad RA4. -->
                 <div class="card-header-actions">
                     <div class="header-tools">
                         <mat-form-field appearance="outline" class="search-field no-label">
-                            <mat-icon matPrefix>search</mat-icon>
+                            <mat-icon matPrefix aria-hidden="true">search</mat-icon>
                             <input matInput (input)="aplicarFiltroTabla($event)"
-                                placeholder="Buscar persona, DNI o contacto...">
+                                placeholder="Buscar persona, DNI o contacto..."
+                                aria-label="Buscar adoptante por nombre, DNI o contacto">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="search-field no-label">
-                            <mat-icon matPrefix>pets</mat-icon>
-                            <mat-select placeholder="Vinculación" (selectionChange)="aplicarFiltroCampo($event.value)">
+                            <mat-icon matPrefix aria-hidden="true">pets</mat-icon>
+                            <mat-select placeholder="Vinculacion" aria-label="Filtrar adoptantes por vinculacion"
+                                (selectionChange)="aplicarFiltroCampo($event.value)">
                                 <mat-option value="">Todas</mat-option>
                                 <mat-option value="con">Con animales</mat-option>
                                 <mat-option value="sin">Sin animales</mat-option>
                             </mat-select>
                         </mat-form-field>
 
-                        <button mat-fab color="primary" (click)="nuevaPersona()" title="Nuevo Adoptante">
-                            <mat-icon>person_add</mat-icon>
+                        <button mat-fab color="primary" (click)="nuevaPersona()" title="Nuevo Adoptante"
+                            aria-label="Crear nuevo adoptante">
+                            <mat-icon aria-hidden="true">person_add</mat-icon>
                         </button>
                     </div>
                 </div>
 
                 <div class="table-wrapper">
+                    <!-- Tabla operable: permite ordenar, paginar, ver historial y editar registros. -->
                     <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
                         <!-- NombreCompleto -->
@@ -78,11 +83,14 @@
                         <ng-container matColumnDef="acciones">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element" class="text-end">
-                                <button mat-icon-button color="accent" (click)="verHistorial(element)">
-                                    <mat-icon>history</mat-icon>
+                                <!-- Botones de icono con nombre accesible especifico por adoptante. -->
+                                <button mat-icon-button color="accent" (click)="verHistorial(element)"
+                                    [attr.aria-label]="'Ver historial de ' + element.nombreCompleto">
+                                    <mat-icon aria-hidden="true">history</mat-icon>
                                 </button>
-                                <button mat-icon-button (click)="editarPersona(element)" class="edit-btn">
-                                    <mat-icon>edit</mat-icon>
+                                <button mat-icon-button (click)="editarPersona(element)" class="edit-btn"
+                                    [attr.aria-label]="'Editar adoptante ' + element.nombreCompleto">
+                                    <mat-icon aria-hidden="true">edit</mat-icon>
                                 </button>
                             </td>
                         </ng-container>

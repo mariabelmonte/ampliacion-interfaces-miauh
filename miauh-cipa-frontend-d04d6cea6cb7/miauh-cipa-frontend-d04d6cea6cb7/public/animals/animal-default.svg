@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Animal sin foto</title>
+  <desc id="desc">Imagen generica para animales sin fotografia asignada.</desc>
+  <rect width="320" height="320" fill="#f1f5f9"/>
+  <circle cx="160" cy="160" r="92" fill="#cbd5e1"/>
+  <circle cx="116" cy="132" r="26" fill="#64748b"/>
+  <circle cx="204" cy="132" r="26" fill="#64748b"/>
+  <circle cx="132" cy="206" r="26" fill="#64748b"/>
+  <circle cx="188" cy="206" r="26" fill="#64748b"/>
+  <ellipse cx="160" cy="170" rx="38" ry="44" fill="#64748b"/>
+</svg>

@@ -1,0 +1,108 @@
+/* Grid responsive para que los criterios sean legibles en movil y escritorio. */
+.a11y-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Titulares compactos: evitan jerarquias visuales exageradas dentro de tarjetas. */
+h2 {
+  margin: 0 0 1.25rem;
+  color: var(--text-main);
+  font-size: 1.4rem;
+}
+
+/* Lista vertical de criterios con separacion suficiente para lectura rapida. */
+.criteria-list {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Cada criterio se presenta como bloque independiente escaneable. */
+.criteria-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-base);
+
+  mat-icon {
+    /* El color principal identifica acciones positivas sin depender solo del icono. */
+    color: var(--color-primary);
+    flex: 0 0 auto;
+  }
+
+  h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: var(--text-main);
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+}
+
+/* Separacion entre el resumen de criterios y la parte de medios audiovisuales. */
+.media-access-card {
+  margin-top: 1.5rem;
+}
+
+/* Encabezado del bloque de transcripcion con icono decorativo oculto por ARIA en HTML. */
+.media-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  mat-icon {
+    color: var(--color-primary);
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+}
+
+/* Video responsive con borde visible y relacion 16:9 estable. */
+.accessible-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 420px;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-color);
+  background: #0f172a;
+  object-fit: cover;
+}
+
+/* Caja desplazable para transcripciones largas, accesible con teclado por tabindex. */
+.transcript {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  background: var(--bg-base);
+  color: var(--text-main);
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Texto auxiliar con menor peso visual, pero manteniendo contraste mediante variable global. */
+.caption {
+  color: var(--text-muted);
+  margin: 1rem 0;
+}

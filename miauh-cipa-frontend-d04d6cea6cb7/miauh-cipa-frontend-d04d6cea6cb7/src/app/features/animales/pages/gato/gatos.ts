@@ -21,7 +21,7 @@ export class Gato implements OnInit {
   public cargando = signal<boolean>(false);
   public modalAbierto = signal<boolean>(false);
 
-  public columnasGato: string[] = ['nombre', 'nombreRaza', 'nombreSituacion', 'acciones'];
+  public columnasGato: string[] = ['imagen', 'nombre', 'nombreRaza', 'nombreSituacion', 'acciones'];
 
   ngOnInit(): void {
     this.cargarGatos();

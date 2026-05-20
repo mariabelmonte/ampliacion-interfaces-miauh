@@ -21,7 +21,7 @@ export class Perro implements OnInit {
   cargando = signal<boolean>(false);
   modalAbierto = signal<boolean>(false);
 
-  columnasPerro: string[] = ['nombre', 'nombreRaza', 'nombreSituacion', 'acciones'];
+  columnasPerro: string[] = ['imagen', 'nombre', 'nombreRaza', 'nombreSituacion', 'acciones'];
 
   ngOnInit(): void {
     this.cargarPerros();

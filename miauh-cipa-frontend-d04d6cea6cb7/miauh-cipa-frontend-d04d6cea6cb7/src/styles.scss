@@ -26,11 +26,13 @@ $dark-theme: mat.define-theme((color: (theme-type: dark,
             )));
 
 :root {
-    --color-primary: #6366f1;
+    // Colores ajustados para mejorar contraste frente a la paleta original.
+    --color-primary: #4f46e5;
     --color-primary-soft: rgba(99, 102, 241, 0.1);
-    --color-secondary: #0ea5e9;
-    --color-accent: #f43f5e;
-    --color-success: #10b981;
+    --color-secondary: #0369a1;
+    --color-accent: #be123c;
+    --color-success: #047857;
+    --focus-ring: #f59e0b;
 
     --sidebar-width: 280px;
     --toolbar-height: 72px;
@@ -52,8 +54,11 @@ body {
     overflow: hidden;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
+// Normaliza el calculo de tamanos para evitar desbordes en formularios y tablas.
 *,
 *::before,
 *::after {
@@ -64,7 +69,73 @@ h1,
 h2,
 h3 {
     font-family: 'Montserrat', sans-serif; // <--- Aplicado globalmente
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
+}
+
+// Enlaces claramente distinguibles por color y compatibles con foco visible global.
+a {
+    color: var(--color-primary);
+}
+
+// Foco visible transversal: imprescindible para navegacion por teclado.
+:focus-visible {
+    outline: 3px solid var(--focus-ring) !important;
+    outline-offset: 3px !important;
+    border-radius: 6px;
+}
+
+// Tamano minimo tactil recomendado para botones e icon buttons.
+button,
+[role="button"],
+.mat-mdc-button-base {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+// Enlace oculto hasta recibir foco; evita recorrer menu y cabecera en cada pagina.
+.skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    transform: translateY(-150%);
+    background: #ffffff;
+    color: #0f172a;
+    border: 3px solid var(--focus-ring);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    font-weight: 800;
+    z-index: 10000;
+    text-decoration: none;
+    box-shadow: var(--shadow-premium);
+
+    &:focus {
+        transform: translateY(0);
+    }
+}
+
+// Texto disponible para lectores de pantalla sin ocupar espacio visual.
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// Respeta usuarios con reduccion de movimiento configurada en el sistema.
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* --- THEME APPLICATION --- */
@@ -118,6 +189,14 @@ h3 {
         padding: 0 1rem;
         position: relative;
         z-index: 1001;
+    }
+
+    .example-sidenav-content {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -340,8 +419,8 @@ table,
     // Estados Positivos / Disponibles
     &.disponible,
     &.perro {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        background: rgba(4, 120, 87, 0.14);
+        color: #047857;
     }
 
     // Estados en Proceso / Informativos
@@ -349,7 +428,7 @@ table,
     &.gato,
     &.reservado {
         background: rgba(14, 165, 233, 0.15);
-        color: #0ea5e9;
+        color: #0369a1;
     }
 
     // Estados de Salida o Finalizados
@@ -362,18 +441,27 @@ table,
     &.no-disponible,
     &.fallecido {
         background: rgba(244, 63, 94, 0.15);
-        color: #f43f5e;
+        color: #be123c;
     }
 
     &.en-tratamiento {
         background: rgba(245, 158, 11, 0.15);
-        color: #f59e0b;
+        color: #92400e;
     }
 }
 
 /* --- SIDENAV TREE --- */
 .sidebar-header {
     padding: 2.5rem 1.5rem 1rem !important;
+
+    p {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin: 0;
+    }
 }
 
 .mat-tree-node {
@@ -405,6 +493,87 @@ table,
         font-size: 20px;
         width: 20px;
         height: 20px;
+    }
+}
+
+.menu-action {
+    width: calc(100% - 24px);
+    border: 0;
+    background: transparent;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 16px;
+
+    .expand-icon {
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        font-size: 18px;
+    }
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.brand-button {
+    border: 0;
+    background: transparent;
+    color: var(--text-main);
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    gap: 0.5rem;
+
+    mat-icon {
+        color: var(--color-primary);
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+    }
+}
+
+.brand-dot {
+    color: var(--color-primary);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-summary {
+    text-align: right;
+    line-height: 1.25;
+
+    .user-name {
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .user-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+}
+
+.footer {
+    margin-top: auto;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+
+    .caption {
+        color: var(--text-muted);
+        font-size: 0.85rem;
     }
 }
 

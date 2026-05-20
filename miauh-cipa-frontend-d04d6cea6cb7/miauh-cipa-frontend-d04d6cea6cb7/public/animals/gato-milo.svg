@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Milo, gato atigrado</title>
+  <desc id="desc">Ilustracion de un gato atigrado sobre fondo verde claro.</desc>
+  <rect width="320" height="320" fill="#dcfce7"/>
+  <path d="M82 118 118 70l18 58z" fill="#737373"/>
+  <path d="M238 118 202 70l-18 58z" fill="#737373"/>
+  <circle cx="160" cy="166" r="94" fill="#8a8a8a"/>
+  <path d="M121 98c18 20 60 20 78 0M105 137c30 12 80 12 110 0M101 187c35-14 83-14 118 0" fill="none" stroke="#525252" stroke-width="10" stroke-linecap="round"/>
+  <ellipse cx="124" cy="158" rx="13" ry="18" fill="#111827"/>
+  <ellipse cx="196" cy="158" rx="13" ry="18" fill="#111827"/>
+  <path d="M150 192h20l-10 12z" fill="#f472b6"/>
+  <path d="M130 218c16 14 44 14 60 0" fill="none" stroke="#111827" stroke-width="8" stroke-linecap="round"/>
+  <path d="M93 190H38M93 207H48M227 190h55M227 207h45" stroke="#525252" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="120" cy="151" r="4" fill="#fff"/>
+  <circle cx="192" cy="151" r="4" fill="#fff"/>
+</svg>

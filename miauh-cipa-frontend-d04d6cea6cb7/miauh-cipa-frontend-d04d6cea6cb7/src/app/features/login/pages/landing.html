@@ -1,7 +1,9 @@
-<div class="fondo">
+<main class="fondo" aria-labelledby="login-title">
+    <!-- Toggle accesible para comprobar contraste en tema claro y oscuro. -->
     <div class="theme-toggle-wrapper">
-        <mat-slide-toggle [checked]="isDark()" (change)="_theme.setTheme($event.checked)">
-            <mat-icon>{{ isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+        <mat-slide-toggle [checked]="isDark()" (change)="_theme.setTheme($event.checked)"
+            aria-label="Alternar tema claro u oscuro">
+            <mat-icon aria-hidden="true">{{ isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
         </mat-slide-toggle>
     </div>
 
@@ -16,24 +18,30 @@
         <div class="fondoForm">
             <div class="container-login">
                 <div class="text-center mb-4">
-                    <h1 class="titulo-principal">MIAUH</h1>
+                    <h1 id="login-title" class="titulo-principal">MIAUH</h1>
                     <p class="subtitulo-principal">Gestion de Refugio Animal</p>
                 </div>
 
+                <!-- role="alert" anuncia errores de validacion/autenticacion al lector de pantalla. -->
                 @if (errorMessage()) {
-                <div class="error-container">
-                    <mat-icon>error</mat-icon>
+                <div class="error-container" role="alert" aria-live="assertive">
+                    <mat-icon aria-hidden="true">error</mat-icon>
                     <span>{{ errorMessage() }}</span>
                 </div>
                 }
 
-                <form [formGroup]="form1" (ngSubmit)="enviarCredenciales()">
+                <!-- Formulario con etiquetas visibles y descripcion oculta para tecnologias de asistencia. -->
+                <form [formGroup]="form1" (ngSubmit)="enviarCredenciales()" aria-describedby="login-help">
+                    <p id="login-help" class="sr-only">
+                        Introduce tu correo electronico y contrasena para acceder a la aplicacion.
+                    </p>
                     <mat-card class="form-card">
                         <mat-card-content>
                             <mat-form-field appearance="outline" class="w-100 mt-2">
                                 <mat-label>Correo electronico</mat-label>
-                                <input matInput type="email" formControlName="email" placeholder="ejemplo@correo.com" autofocus>
-                                <mat-icon matSuffix>email</mat-icon>
+                                <input matInput type="email" formControlName="email" placeholder="ejemplo@correo.com"
+                                    autocomplete="email" autofocus>
+                                <mat-icon matSuffix aria-hidden="true">email</mat-icon>
                                 @if (form1.get('email')?.errors?.['required'] && form1.get('email')?.touched) {
                                 <mat-error>El email es obligatorio</mat-error>
                                 }
@@ -45,8 +53,10 @@
                             <mat-form-field appearance="outline" class="w-100 mt-2">
                                 <mat-label>Contraseña</mat-label>
                                 <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'">
-                                <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
-                                    <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                <!-- Boton con aria-label dinamico para no depender del icono de visibilidad. -->
+                                <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())"
+                                    [attr.aria-label]="hidePassword() ? 'Mostrar contrasena' : 'Ocultar contrasena'">
+                                    <mat-icon aria-hidden="true">{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
                                 </button>
                                 @if (form1.get('password')?.invalid && form1.get('password')?.touched) {
                                 <mat-error>La contraseña es obligatoria</mat-error>
@@ -59,7 +69,7 @@
                         <button type="submit" mat-raised-button class="btn-login" [disabled]="form1.invalid || showSpinner()">
                             <span>{{ showSpinner() ? 'Cargando...' : 'Iniciar sesion' }}</span>
                             @if (!showSpinner()) {
-                            <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+                            <mat-icon iconPositionEnd aria-hidden="true">arrow_forward</mat-icon>
                             }
                         </button>
                     </div>
@@ -67,4 +77,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>

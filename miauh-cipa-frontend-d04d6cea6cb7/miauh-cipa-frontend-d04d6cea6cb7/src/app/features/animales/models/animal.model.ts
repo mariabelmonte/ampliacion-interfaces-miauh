@@ -17,6 +17,9 @@ export interface Animal {
     esterilizado: boolean;
     numeroChip: string;
     comentarios: string;
+    imagenUrl?: string;
+    imagenAlt?: string;
+    imagenTamanyo?: 'sm' | 'md' | 'lg';
     raza?: Raza;
     situacion?: Situacion;
     ubicacion?: Ubicacion;

@@ -7,41 +7,46 @@
     <div class="row">
         <div class="col">
             <mat-card class="premium-table-card">
+                <!-- Filtros rapidos para separar adopciones, acogidas y estado del plazo. -->
                 <div class="card-header-actions">
                     <div class="header-tools">
-                        <mat-chip-listbox (change)="cambiarFiltro($event.value || 'TODAS')" class="me-2">
+                        <mat-chip-listbox (change)="cambiarFiltro($event.value || 'TODAS')" class="me-2"
+                            aria-label="Filtrar por tipo de transaccion">
                             <mat-chip-option value="TODAS" selected>Todas</mat-chip-option>
                             <mat-chip-option value="ADOPCION">Adopciones</mat-chip-option>
                             <mat-chip-option value="ACOGIDA">Acogidas</mat-chip-option>
                         </mat-chip-listbox>
 
                         <mat-form-field appearance="outline" class="search-field no-label">
-                            <mat-icon matPrefix>search</mat-icon>
+                            <mat-icon matPrefix aria-hidden="true">search</mat-icon>
                             <input matInput (input)="aplicarFiltroTabla($event)"
-                                placeholder="Buscar animal o persona...">
+                                placeholder="Buscar animal o persona..."
+                                aria-label="Buscar transaccion por animal o persona">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="search-field no-label">
-                            <mat-icon matPrefix>event_available</mat-icon>
-                            <mat-select placeholder="Plazo" (selectionChange)="aplicarFiltroEstado($event.value)">
+                            <mat-icon matPrefix aria-hidden="true">event_available</mat-icon>
+                            <mat-select placeholder="Plazo" aria-label="Filtrar transacciones por plazo"
+                                (selectionChange)="aplicarFiltroEstado($event.value)">
                                 <mat-option value="">Todos</mat-option>
                                 <mat-option value="activa">Activas</mat-option>
                                 <mat-option value="finalizada">Finalizadas</mat-option>
                             </mat-select>
                         </mat-form-field>
 
-                        <button mat-fab color="primary" (click)="abrirModal('ADOPCION')" title="Nueva Adopción"
-                            class="ms-2">
-                            <mat-icon>handshake</mat-icon>
+                        <button mat-fab color="primary" (click)="abrirModal('ADOPCION')" title="Nueva Adopcion"
+                            class="ms-2" aria-label="Crear nueva adopcion">
+                            <mat-icon aria-hidden="true">handshake</mat-icon>
                         </button>
                         <button mat-fab color="accent" (click)="abrirModal('ACOGIDA')" title="Nueva Acogida"
-                            class="ms-2">
-                            <mat-icon>home_mini</mat-icon>
+                            class="ms-2" aria-label="Crear nueva acogida">
+                            <mat-icon aria-hidden="true">home_mini</mat-icon>
                         </button>
                     </div>
                 </div>
 
                 <div class="table-wrapper">
+                    <!-- Tabla de operaciones con ordenacion y edicion contextual por fila. -->
                     <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
                         <!-- Tipo -->
@@ -88,8 +93,10 @@
                         <ng-container matColumnDef="acciones">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element" class="text-end">
-                                <button mat-icon-button (click)="abrirModal(element.tipo, element)" class="edit-btn">
-                                    <mat-icon>edit</mat-icon>
+                                <!-- El aria-label evita que el lector anuncie solo "boton editar". -->
+                                <button mat-icon-button (click)="abrirModal(element.tipo, element)" class="edit-btn"
+                                    [attr.aria-label]="'Editar ' + element.tipo + ' de ' + element.nombreAnimal">
+                                    <mat-icon aria-hidden="true">edit</mat-icon>
                                 </button>
                             </td>
                         </ng-container>
@@ -105,7 +112,8 @@
                     </table>
                 </div>
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Seleccionar pagina de transacciones"></mat-paginator>
             </mat-card>
         </div>
     </div>

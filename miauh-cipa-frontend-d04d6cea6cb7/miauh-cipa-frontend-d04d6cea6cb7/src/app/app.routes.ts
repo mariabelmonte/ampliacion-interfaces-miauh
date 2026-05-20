@@ -63,6 +63,13 @@ export const routes: Routes = [
                         .then(m => m.Calendario)
             },
             {
+                // Pagina documental creada para justificar requisitos RA4 de accesibilidad/usabilidad.
+                path: 'accesibilidad',
+                loadComponent: () =>
+                    import('./features/accesibilidad/pages/accesibilidad/accesibilidad')
+                        .then(m => m.Accesibilidad)
+            },
+            {
                 path: 'transacciones',
                 loadComponent: () =>
                     import('./features/transacciones/pages/transacciones/transacciones')

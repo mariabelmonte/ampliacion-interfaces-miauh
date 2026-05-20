@@ -1,73 +1,92 @@
 @if(keyView() && userView()) {
-<mat-toolbar class="toolbar">
-  <button mat-icon-button (click)="drawer.toggle()">
-    <mat-icon>menu</mat-icon>
+<!-- Enlace de salto: permite a usuarios de teclado evitar cabecera y menu repetidos. -->
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<!-- role="banner" marca la cabecera principal para tecnologias de asistencia. -->
+<mat-toolbar class="toolbar" role="banner">
+  <button mat-icon-button type="button" (click)="drawer.toggle()" aria-label="Abrir o cerrar menu principal">
+    <mat-icon aria-hidden="true">menu</mat-icon>
   </button>
 
-  <div class="brand-container" style="display: flex; align-items: center; margin-left: 1rem;">
-    <mat-icon (click)="goToCentral()"
-      style="color: var(--color-primary); font-size: 28px; width: 28px; height: 28px; cursor: pointer;">pets</mat-icon>
-    <span (click)="goToCentral()"
-      style="font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; margin-left: 0.5rem; color: var(--text-main); cursor: pointer;">
-      MIAUH<span style="color: var(--color-primary);">.</span>
-    </span>
-  </div>
+  <!-- Boton de marca con texto visible y aria-label para dejar claro el destino. -->
+  <button type="button" class="brand-container brand-button" (click)="goToCentral()" aria-label="Ir al dashboard">
+    <mat-icon aria-hidden="true">pets</mat-icon>
+    <span>MIAUH<span aria-hidden="true" class="brand-dot">.</span></span>
+  </button>
 
-  <span class="spacer" style="flex: 1 1 auto;"></span>
+  <span class="spacer"></span>
 
-  <div class="actions-container" style="display: flex; align-items: center; gap: 1rem;">
+  <!-- Resumen de usuario: aporta contexto sin obligar a abrir menus adicionales. -->
+  <div class="actions-container">
     @let usuarioActual = user();
     @if (usuarioActual) {
-    <div class="user-summary" style="text-align: right; line-height: 1.2;">
-      <div style="font-weight: 700; color: var(--text-main);">{{ usuarioActual.name || usuarioActual.nombre }}</div>
-      <div style="font-size: 0.78rem; color: var(--text-muted);">{{ usuarioActual.email }} - {{ usuarioActual.role || usuarioActual.rol }}</div>
+    <div class="user-summary" aria-label="Usuario conectado">
+      <div class="user-name">{{ usuarioActual.name || usuarioActual.nombre }}</div>
+      <div class="user-meta">{{ usuarioActual.email }} - {{ usuarioActual.role || usuarioActual.rol }}</div>
     </div>
     }
-    <button mat-icon-button (click)="logout()" title="Cerrar sesion">
-      <mat-icon>logout</mat-icon>
+    <button mat-icon-button type="button" (click)="logout()" aria-label="Cerrar sesion" matTooltip="Cerrar sesion">
+      <mat-icon aria-hidden="true">logout</mat-icon>
     </button>
-    <mat-slide-toggle [checked]="isDark()" (change)="onSetTheme($event)">
-      <mat-icon style="margin-right: -4px;">{{ isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    <mat-slide-toggle
+      [checked]="isDark()"
+      (change)="onSetTheme($event)"
+      aria-label="Alternar tema claro u oscuro">
+      <mat-icon aria-hidden="true">{{ isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
     </mat-slide-toggle>
   </div>
 </mat-toolbar>
 
+<!-- Contenedor principal con navegacion lateral y region de contenido. -->
 <mat-drawer-container class="container-base">
-  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
-    <div class="sidebar-header" style="padding: 2rem 1.5rem 1rem;">
-      <p
-        style="text-transform: uppercase; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);">
-        Panel de navegacion
-      </p>
+  <!-- role="navigation" identifica el menu principal de la aplicacion. -->
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true" role="navigation" aria-label="Menu principal">
+    <div class="sidebar-header">
+      <p>Panel de navegacion</p>
     </div>
 
-    <mat-tree [dataSource]="menuData()" [childrenAccessor]="childrenAccessor">
+    <mat-tree [dataSource]="menuData()" [childrenAccessor]="childrenAccessor" aria-label="Secciones de MIAUH">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-        <div class="mat-tree-node" (click)="navegar(node)" [class.menu-active]="false">
-          <mat-icon>{{node.icon}}</mat-icon>
+        <!-- aria-current informa al lector de pantalla de la pagina activa. -->
+        <button
+          type="button"
+          class="mat-tree-node menu-action"
+          (click)="navegar(node)"
+          (keydown)="onMenuKeydown($event, node)"
+          [class.menu-active]="isRouteActive(node)"
+          [attr.aria-current]="isRouteActive(node) ? 'page' : null">
+          <mat-icon aria-hidden="true">{{node.icon}}</mat-icon>
           <span>{{node.name}}</span>
-        </div>
+        </button>
       </mat-tree-node>
 
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-        <div class="mat-tree-node parent-node" matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-          <mat-icon>{{node.icon}}</mat-icon>
+        <!-- Los grupos desplegables usan un boton real para conservar interaccion por teclado. -->
+        <button
+          type="button"
+          class="mat-tree-node parent-node menu-action"
+          matTreeNodeToggle
+          [attr.aria-label]="'Mostrar u ocultar ' + node.name">
+          <mat-icon aria-hidden="true">{{node.icon}}</mat-icon>
           <span>{{node.name}}</span>
-          <mat-icon style="margin-left: auto; margin-right: 0; font-size: 18px;">expand_more</mat-icon>
-        </div>
+          <mat-icon aria-hidden="true" class="expand-icon">expand_more</mat-icon>
+        </button>
       </mat-tree-node>
     </mat-tree>
   </mat-drawer>
 
-  <div class="example-sidenav-content" style="width: 100%; height: 100%; overflow-y: auto;">
-    <router-outlet></router-outlet>
+  <div class="example-sidenav-content">
+    <!-- tabindex="-1" permite que el enlace de salto enfoque el contenido principal. -->
+    <main id="contenido-principal" tabindex="-1" role="main">
+      <router-outlet></router-outlet>
+    </main>
 
-    <div class="options footer"
-      style="margin-top: auto; padding: 2rem; border-top: 1px solid var(--border-color); opacity: 0.5;">
-      <div class="caption text-center" style="font-size: 0.8rem;">
-        MIAUH &copy; {{year}} | Trabajo Final de Grado
+    <!-- Pie visible y semantico: cubre el criterio de cabecera/pie de pagina. -->
+    <footer class="options footer" role="contentinfo">
+      <div class="caption text-center">
+        MIAUH &copy; {{year}} | Proyecto RA4 de usabilidad y accesibilidad
       </div>
-    </div>
+    </footer>
   </div>
 </mat-drawer-container>
 <app-spinner></app-spinner>

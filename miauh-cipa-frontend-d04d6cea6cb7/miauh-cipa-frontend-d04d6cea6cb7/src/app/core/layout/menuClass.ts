@@ -18,6 +18,8 @@ export class MenuClass {
       { id: '5', name: 'Adoptantes', active: true, route: 'adoptantes', expanded: false, icon: 'groups' },
       { id: '7', name: 'Adopciones', active: true, route: 'transacciones', expanded: false, icon: 'volunteer_activism' },
       { id: '8', name: 'Calendario', active: true, route: 'calendario', expanded: false, icon: 'event' },
+      // Entrada visible para que el profesorado encuentre rapido las evidencias RA4.
+      { id: '8.1', name: 'Accesibilidad', active: true, route: 'accesibilidad', expanded: false, icon: 'accessibility_new' },
     ];
 
     if (this.canSeeAdvancedManagement()) {

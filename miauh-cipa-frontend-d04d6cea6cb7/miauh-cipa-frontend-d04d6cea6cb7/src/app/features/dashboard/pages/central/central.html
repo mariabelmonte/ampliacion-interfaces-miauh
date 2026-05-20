@@ -7,12 +7,12 @@
     </div>
 
     <!-- Fila 1: 4 tarjetas de estadísticas -->
-    <div class="dashboard-stats-grid mb-3">
+    <section class="dashboard-stats-grid mb-3" aria-label="Indicadores principales">
         <div class="stat-card-wrap">
             <mat-card class="card-class">
                 <div class="stat-card-content">
                     <div class="icon-box" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
-                        <mat-icon>pets</mat-icon>
+                        <mat-icon aria-hidden="true">pets</mat-icon>
                     </div>
                     <div class="stat-details">
                         <div class="stat-label">Total Animales</div>
@@ -25,7 +25,7 @@
             <mat-card class="card-class">
                 <div class="stat-card-content">
                     <div class="icon-box" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <mat-icon>person_add</mat-icon>
+                        <mat-icon aria-hidden="true">person_add</mat-icon>
                     </div>
                     <div class="stat-details">
                         <div class="stat-label">Adoptados</div>
@@ -38,7 +38,7 @@
             <mat-card class="card-class">
                 <div class="stat-card-content">
                     <div class="icon-box" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9;">
-                        <mat-icon>home</mat-icon>
+                        <mat-icon aria-hidden="true">home</mat-icon>
                     </div>
                     <div class="stat-details">
                         <div class="stat-label">En acogida</div>
@@ -47,15 +47,15 @@
                 </div>
             </mat-card>
         </div>
-    </div>
+    </section>
 
     <!-- Fila 2: 2 tarjetas de detalle -->
-    <div class="dashboard-detail-grid">
+    <section class="dashboard-detail-grid" aria-label="Resumen de adopciones pendientes">
         <div class="stat-card-wrap">
             <mat-card class="card-class">
                 <div class="stat-card-content">
                     <div class="icon-box" style="background: rgba(244, 63, 94, 0.1); color: #f43f5e;">
-                        <mat-icon>pending_actions</mat-icon>
+                        <mat-icon aria-hidden="true">pending_actions</mat-icon>
                     </div>
                     <div class="stat-details">
                         <div class="stat-label">Adopciones Pendientes</div>
@@ -65,10 +65,10 @@
                 </div>
             </mat-card>
         </div>
-    </div>
+    </section>
 
     <!-- Calendario -->
-    <div class="row mt-4">
+    <section class="row mt-4" aria-label="Calendario de actividad">
         <div class="col-12 col-lg-8 mb-4">
             <mat-card class="card-class p-3">
                 <app-calendario></app-calendario>
@@ -85,6 +85,6 @@
             </div>
         </div>
         -->
-    </div>
+    </section>
 
 </div>

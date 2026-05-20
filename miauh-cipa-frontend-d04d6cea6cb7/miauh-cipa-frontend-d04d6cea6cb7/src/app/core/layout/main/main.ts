@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DOCUMENT, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -49,6 +49,7 @@ export class Main implements OnInit {
   isDrawerOpen = true;
   year = new Date().getFullYear();
 
+  // API requerida por mat-tree para detectar nodos hijos sin recalcular plantillas.
   childrenAccessor = (node: FoodNode) => node.children ?? [];
   hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
 
@@ -60,6 +61,7 @@ export class Main implements OnInit {
     this.getUser();
   }
 
+  // Carga el usuario antes del menu para mostrar solo las secciones permitidas por rol.
   async getUser(): Promise<void> {
     try {
       const response = await this._user.fetchUser();
@@ -86,18 +88,32 @@ export class Main implements OnInit {
     }
   }
 
+  // El menu depende del rol del usuario, por eso se genera cuando ya existe sesion.
   loadMenu(): void {
     const menu = new MenuClass(this.user());
     this.menuData.set(menu.seleccionarMenu());
     this.keyView.set(true);
   }
 
+  // Punto unico de navegacion desde el arbol lateral.
   navegar(node: FoodNode): void {
     if (node.name === 'Cerrar sesión') {
       this.logout();
     } else if (node.route) {
       this.router.navigateByUrl('/' + node.route);
     }
+  }
+
+  // Marca visualmente y semanticamente la ruta activa con aria-current="page".
+  isRouteActive(node: FoodNode): boolean {
+    return !!node.route && this.router.url.replace('/', '') === node.route;
+  }
+
+  // Refuerzo de teclado para activar opciones con Enter o Espacio.
+  onMenuKeydown(event: KeyboardEvent, node: FoodNode): void {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    this.navegar(node);
   }
 
   goToCentral(): void {
