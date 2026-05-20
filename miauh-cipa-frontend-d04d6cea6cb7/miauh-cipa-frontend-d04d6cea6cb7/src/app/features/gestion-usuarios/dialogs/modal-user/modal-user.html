@@ -1,0 +1,88 @@
+<form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="premium-modal-header" style="position: relative;">
+        <h2>{{ title }}</h2>
+        <p>Configuracion de credenciales y accesos</p>
+        <button type="button" mat-icon-button [mat-dialog-close]="false"
+            style="position: absolute; top: 30px; right: 30px; color: white;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content class="premium-dialog-content">
+        <div class="form-section-title">Datos del Usuario</div>
+        <div class="container-fluid p-0">
+            <div class="row g-4 mt-2">
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100 mb-0">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" cdkFocusInitial>
+                        <mat-icon matSuffix>person</mat-icon>
+                        @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+                        <mat-error>El nombre es obligatorio</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100 mb-0">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput formControlName="apellidos">
+                        <mat-icon matSuffix>badge</mat-icon>
+                        @if (form.get('apellidos')?.invalid && form.get('apellidos')?.touched) {
+                        <mat-error>Los apellidos son obligatorios</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100 mb-0">
+                        <mat-label>Correo electronico</mat-label>
+                        <input matInput type="email" formControlName="email">
+                        <mat-icon matSuffix>email</mat-icon>
+                        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+                        <mat-error>Email no valido</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100 mb-0">
+                        <mat-label>Rol de usuario</mat-label>
+                        <mat-select formControlName="rol">
+                            @for (role of roles; track role) {
+                            <mat-option [value]="role">{{ role }}</mat-option>
+                            }
+                        </mat-select>
+                        <mat-icon matSuffix>admin_panel_settings</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100 mb-0">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" formControlName="password"
+                            placeholder="Dejar en blanco para no cambiar">
+                        <mat-icon matSuffix>lock</mat-icon>
+                        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+                        <mat-error>La contraseña debe tener al menos 8 caracteres</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 mt-4 mb-2">
+                    <mat-slide-toggle color="primary" formControlName="activo"
+                        style="font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--text-muted);">
+                        Usuario habilitado
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="premium-actions">
+        <button type="button" mat-button [mat-dialog-close]="false">Cancelar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+            <mat-icon>save</mat-icon> Guardar Cambios
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,112 @@
+<div class="container-fluid p-1 p-md-4">
+    <header class="page-header">
+        <h1>Acogidas y Adopciones</h1>
+        <p>Seguimiento de contratos y estancias temporales</p>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <mat-card class="premium-table-card">
+                <div class="card-header-actions">
+                    <div class="header-tools">
+                        <mat-chip-listbox (change)="cambiarFiltro($event.value || 'TODAS')" class="me-2">
+                            <mat-chip-option value="TODAS" selected>Todas</mat-chip-option>
+                            <mat-chip-option value="ADOPCION">Adopciones</mat-chip-option>
+                            <mat-chip-option value="ACOGIDA">Acogidas</mat-chip-option>
+                        </mat-chip-listbox>
+
+                        <mat-form-field appearance="outline" class="search-field no-label">
+                            <mat-icon matPrefix>search</mat-icon>
+                            <input matInput (input)="aplicarFiltroTabla($event)"
+                                placeholder="Buscar animal o persona...">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="search-field no-label">
+                            <mat-icon matPrefix>event_available</mat-icon>
+                            <mat-select placeholder="Plazo" (selectionChange)="aplicarFiltroEstado($event.value)">
+                                <mat-option value="">Todos</mat-option>
+                                <mat-option value="activa">Activas</mat-option>
+                                <mat-option value="finalizada">Finalizadas</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button mat-fab color="primary" (click)="abrirModal('ADOPCION')" title="Nueva Adopción"
+                            class="ms-2">
+                            <mat-icon>handshake</mat-icon>
+                        </button>
+                        <button mat-fab color="accent" (click)="abrirModal('ACOGIDA')" title="Nueva Acogida"
+                            class="ms-2">
+                            <mat-icon>home_mini</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+                        <!-- Tipo -->
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span [class]="element.tipo === 'ADOPCION' ? 'badge-adopcion' : 'badge-acogida'">
+                                    {{ element.tipo }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Animal -->
+                        <ng-container matColumnDef="animal">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ANIMAL </th>
+                            <td mat-cell *matCellDef="let element" class="font-bold"> {{element.nombreAnimal}} </td>
+                        </ng-container>
+
+                        <!-- Adoptante -->
+                        <ng-container matColumnDef="adoptante">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> A CARGO DE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nombreAdoptante}} </td>
+                        </ng-container>
+
+                        <!-- Fechas -->
+                        <ng-container matColumnDef="fechas">
+                            <th mat-header-cell *matHeaderCellDef> PLAZO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="d-flex flex-column" style="font-size: 0.85rem;">
+                                    <span><mat-icon
+                                            style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;">calendar_today</mat-icon>
+                                        Inicio: {{element.fechaInicio | date:'dd/MM/yyyy'}}</span>
+                                    @if (element.fechaFin) {
+                                    <span class="text-muted"><mat-icon
+                                            style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;">event_busy</mat-icon>
+                                        {{ element.tipo === 'ADOPCION' ? 'Salida' : 'Fin' }}:
+                                        {{element.fechaFin | date:'dd/MM/yyyy'}}</span>
+                                    }
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Acciones -->
+                        <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element" class="text-end">
+                                <button mat-icon-button (click)="abrirModal(element.tipo, element)" class="edit-btn">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell p-4 text-center" colspan="5">
+                                No se han encontrado registros.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </mat-card>
+        </div>
+    </div>
+</div>

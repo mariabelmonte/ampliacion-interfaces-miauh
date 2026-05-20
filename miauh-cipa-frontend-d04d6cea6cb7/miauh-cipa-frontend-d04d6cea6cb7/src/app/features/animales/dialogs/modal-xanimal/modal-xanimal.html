@@ -1,0 +1,240 @@
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <div class="premium-modal-header">
+    <h2 mat-dialog-title>
+      {{ esEdicion() ? 'Modificar Registro: ' + data.nombre : 'Nuevo Animal' }}
+    </h2>
+    <p>{{ esEdicion() ? 'Actualizando datos en el sistema' : 'Completa los datos tecnicos para el registro' }}</p>
+  </div>
+
+  <mat-dialog-content class="premium-dialog-content">
+    <mat-tab-group class="premium-tabs" animationDuration="200ms">
+      <mat-tab label="Datos Generales">
+        <div class="row mt-4">
+          <div class="col-12">
+            <h3 class="form-section-title">Identificacion y Rasgos</h3>
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Nombre Completo</mat-label>
+              <input matInput formControlName="nombre" placeholder="Ej. Toby" cdkFocusInitial>
+              @if (form.get('nombre')?.hasError('required')) {
+              <mat-error>El nombre es obligatorio</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Sexo</mat-label>
+              <mat-select formControlName="sexo">
+                <mat-option value="M">Macho</mat-option>
+                <mat-option value="H">Hembra</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Capa (Color)</mat-label>
+              <input matInput formControlName="capa" placeholder="Ej. Canela">
+              @if (form.get('capa')?.hasError('required')) {
+              <mat-error>La capa es obligatoria</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Tamano</mat-label>
+              <mat-select formControlName="tamanyo">
+                <mat-option value="Pequeño">Pequeno</mat-option>
+                <mat-option value="Mediano">Mediano</mat-option>
+                <mat-option value="Grande">Grande</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12">
+            <h3 class="form-section-title">Clasificacion, Situacion y Ubicacion</h3>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Especie</mat-label>
+              <mat-select formControlName="especieId">
+                @for (especie of especies(); track (especie.idEspecie || especie.id)) {
+                <mat-option [value]="especie.idEspecie || especie.id">{{especie.nombre}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Raza</mat-label>
+              <mat-select formControlName="razaId">
+                @for (raza of razas(); track (raza.idRaza || raza.id)) {
+                <mat-option [value]="raza.idRaza || raza.id">{{raza.nombre}}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('razaId')?.hasError('required')) {
+              <mat-error>La raza es obligatoria</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Situacion</mat-label>
+              <mat-select formControlName="situacionId">
+                @for (sit of situaciones(); track sit.id) {
+                <mat-option [value]="sit.id">{{sit.nombre}}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('situacionId')?.hasError('required')) {
+              <mat-error>La situacion es obligatoria</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Ubicacion</mat-label>
+              <mat-select formControlName="ubicacionId">
+                @for (ubi of ubicaciones(); track ubi.id) {
+                <mat-option [value]="ubi.id">{{ubi.nombre}}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('ubicacionId')?.hasError('required')) {
+              <mat-error>La ubicacion es obligatoria</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput type="date" formControlName="fechaNacimiento">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha de Ingreso</mat-label>
+              <input matInput type="date" formControlName="fechaIngreso">
+              @if (form.get('fechaIngreso')?.hasError('required')) {
+              <mat-error>La fecha de ingreso es obligatoria</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-12">
+            <h3 class="form-section-title">Otros Datos y Observaciones</h3>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Procedencia / Origen</mat-label>
+              <input matInput formControlName="procedencia" placeholder="Ej. Recogido en calle Mayor">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Numero de Chip</mat-label>
+              <input matInput formControlName="numeroChip">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3 mb-3 d-flex align-items-center">
+            <mat-checkbox formControlName="esterilizado" color="primary">Esterilizado</mat-checkbox>
+          </div>
+
+          @if (esPerro()) {
+          <div class="col-12">
+            <div class="ppp-warning-box">
+              <mat-checkbox formControlName="ppp" color="warn">
+                <span style="font-weight: 800; font-size: 1rem;">Animal Potencialmente Peligroso (PPP)</span>
+                <p style="margin: 0; font-size: 0.85rem; opacity: 0.8;">
+                  Activa esta casilla solo si la raza del animal esta catalogada como PPP.
+                </p>
+              </mat-checkbox>
+            </div>
+          </div>
+          }
+
+          <div class="col-12 mb-3 mt-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Observaciones Adicionales</mat-label>
+              <textarea matInput formControlName="comentarios" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
+
+      @if (esEdicion()) {
+      <mat-tab label="Tratamientos">
+        <div class="clinical-tab mt-4">
+          <div class="card-header-actions clinical-actions">
+            <h3 class="form-section-title">Tratamientos realizados</h3>
+            <button type="button" mat-flat-button color="primary" (click)="abrirGestionSalud()">
+              <mat-icon>medical_services</mat-icon>
+              Añadir registro
+            </button>
+          </div>
+
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="tratamientos()" class="w-100">
+              <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef>TIPO</th>
+                <td mat-cell *matCellDef="let tratamiento" class="font-bold">
+                  {{ tipoTratamiento(tratamiento) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="medicamento">
+                <th mat-header-cell *matHeaderCellDef>MEDICAMENTO</th>
+                <td mat-cell *matCellDef="let tratamiento">
+                  {{ nombreTratamiento(tratamiento) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef>FECHA</th>
+                <td mat-cell *matCellDef="let tratamiento">
+                  {{ tratamiento.fecha | date:'dd/MM/yyyy' }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comentarios">
+                <th mat-header-cell *matHeaderCellDef>NOTAS</th>
+                <td mat-cell *matCellDef="let tratamiento">
+                  {{ notasTratamiento(tratamiento) }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnasTratamientos"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnasTratamientos;"></tr>
+            </table>
+          </div>
+
+          @if (!cargandoTratamientos() && tratamientos().length === 0) {
+          <div class="p-4 text-center text-muted">
+            Este animal todavia no tiene tratamientos registrados.
+          </div>
+          }
+        </div>
+      </mat-tab>
+      }
+    </mat-tab-group>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="premium-actions">
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button type="submit" mat-flat-button color="primary" [disabled]="form.invalid">
+      <mat-icon>check_circle</mat-icon>
+      {{ esEdicion() ? 'Guardar Cambios' : 'Finalizar Registro' }}
+    </button>
+  </mat-dialog-actions>
+</form>

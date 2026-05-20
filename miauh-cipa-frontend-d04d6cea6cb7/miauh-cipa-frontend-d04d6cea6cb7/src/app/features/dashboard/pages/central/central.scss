@@ -1,0 +1,138 @@
+.dashboard-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+.dashboard-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+}
+
+.stat-card-wrap {
+    min-width: 0;
+}
+
+.stat-card-wrap .card-class {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .dashboard-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+.proximos-eventos-container {
+    padding: 20px;
+    background-color: #f8fafc;
+    /* Un gris muy clarito de fondo */
+}
+
+.evento-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Sombra suave */
+    transition: transform 0.2s;
+}
+
+.evento-card:hover {
+    transform: translateY(-2px);
+    /* Efecto al pasar el ratón */
+}
+
+.color-tag {
+    width: 6px;
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.evento-content {
+    flex-grow: 1;
+    /* Hace que este bloque ocupe el espacio medio */
+    display: flex;
+    gap: 10px;
+    /* Espacio entre hora, título y categoría */
+    align-items: center;
+}
+
+.evento-hora {
+    font-weight: bold;
+    color: #64748b;
+    min-width: 50px;
+}
+
+.evento-titulo {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.evento-categoria {
+    font-size: 0.85rem;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 6px;
+    color: #475569;
+}
+
+.btn-check {
+    border: none;
+    background: #ecfdf5;
+    color: #10b981;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Estilo cuando la tarea está completada */
+.evento-card.is-done {
+    background-color: #f1f5f9;
+    /* Grisáceo */
+    opacity: 0.6;
+    /* Más transparente */
+    order: 1;
+    /* Si el contenedor es flex, esto la manda al final */
+}
+
+.evento-card.is-done .evento-titulo {
+    text-decoration: line-through;
+    /* Tachado */
+    color: #94a3b8;
+}
+
+/* Contenedor de la lista para que funcione el 'order' */
+.lista-eventos {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-delete {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-delete:hover {
+    background: #fecaca;
+}

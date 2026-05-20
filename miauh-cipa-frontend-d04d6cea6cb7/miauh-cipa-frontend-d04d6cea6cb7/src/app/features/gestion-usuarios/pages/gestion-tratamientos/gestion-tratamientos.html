@@ -1,0 +1,115 @@
+<div class="container-fluid p-1 p-md-4">
+    <header class="page-header">
+        <h1>Gestión de Tratamientos</h1>
+        <p>Administración de tratamientos del refugio</p>
+    </header>
+    <div class="content_body">
+        <div class="premium-table-card mb-4">
+            @if (stepBotones()) {
+            <div class="actions-grid p-4">
+                <button mat-flat-button color="primary" class="action-btn" (click)='showStep("vacuna")'>
+                    <mat-icon>vaccines</mat-icon>
+                    <span>Añadir una vacuna</span>
+                </button>
+                <button mat-flat-button color="accent" class="action-btn" (click)='showStep("desparasitacion")'>
+                    <mat-icon>bug_report</mat-icon>
+                    <span>Añadir desparasitante</span>
+                </button>
+                <button mat-flat-button color="warn" class="action-btn" (click)='showStep("test")'>
+                    <mat-icon>biotech</mat-icon>
+                    <span>Añadir un test</span>
+                </button>
+            </div>
+            }
+            <div class="content_form">
+                @if (stepVacuna()) {
+                <h3 class="form-section-title">
+                    <mat-icon>vaccines</mat-icon>
+                    Añadir Nueva Vacuna
+                </h3>
+                <form [formGroup]="vacunaForm" (ngSubmit)="saveVacuna()" class="treatment-form">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre de la Vacuna</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ej. Polivalente">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Especies</mat-label>
+                        <mat-select formControlName="idEspecies" multiple>
+                            @for (especie of especies(); track getEspecieId(especie)) {
+                            <mat-option [value]="getEspecieId(especie)">
+                                {{especie.nombre}}
+                            </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="form-actions">
+                        <button mat-flat-button color="primary" type="submit" [disabled]="vacunaForm.invalid">
+                            Guardar Vacuna
+                        </button>
+                        <button mat-button type="button" (click)="showStep('botones')">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+                }
+
+                @if (stepDesparacitacion()) {
+                <h3 class="form-section-title">
+                    <mat-icon>bug_report</mat-icon>
+                    Añadir Nueva Desparasitación
+                </h3>
+                <form [formGroup]="desparasitacionForm" (ngSubmit)="saveDesparasitacion()" class="treatment-form">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre de la Desparasitación</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ej. Interna">
+                    </mat-form-field>
+
+                    <div class="form-actions">
+                        <button mat-flat-button color="primary" type="submit" [disabled]="desparasitacionForm.invalid">
+                            Guardar Desparasitación
+                        </button>
+                        <button mat-button type="button" (click)="showStep('botones')">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+                }
+
+                @if (stepTest()) {
+                <h3 class="form-section-title">
+                    <mat-icon>biotech</mat-icon>
+                    Añadir Nuevo Test
+                </h3>
+                <form [formGroup]="testForm" (ngSubmit)="saveTest()" class="treatment-form">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre del Test</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ej. Leucemia/Inmuno">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Especies</mat-label>
+                        <mat-select formControlName="idEspecies" multiple>
+                            @for (especie of especies(); track getEspecieId(especie)) {
+                            <mat-option [value]="getEspecieId(especie)">
+                                {{especie.nombre}}
+                            </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="form-actions">
+                        <button mat-flat-button color="primary" type="submit" [disabled]="testForm.invalid">
+                            Guardar Test
+                        </button>
+                        <button mat-button type="button" (click)="showStep('botones')">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

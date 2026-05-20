@@ -1,0 +1,83 @@
+<form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="premium-modal-header">
+        <h2 mat-dialog-title>{{ titulo() }}</h2>
+        <p>Completa el registro del contrato de {{ data.tipo.toLowerCase() }}</p>
+    </div>
+
+    <mat-dialog-content class="premium-dialog-content">
+        <div class="row">
+
+            <div class="col-12">
+                <h3 class="form-section-title">Sujetos Implicados</h3>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Adoptante / Responsable</mat-label>
+                    <mat-select formControlName="adoptante" cdkFocusInitial>
+                        @if (data.item && data.item.idAdoptante) {
+                        <mat-option [value]="data.item.idAdoptante">{{ data.item.nombreAdoptante }}</mat-option>
+                        }
+                        @for (a of adoptantes(); track a.id) {
+                        <mat-option [value]="a.id">
+                            {{ a.nombreCompleto }} ({{ a.identificacion }})
+                        </mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Animal</mat-label>
+                    <mat-select formControlName="animal">
+                        @if (data.item && data.item.idAnimal) {
+                        <mat-option [value]="data.item.idAnimal">{{ data.item.nombreAnimal }}</mat-option>
+                        }
+                        @for (ani of animalesDisponibles(); track ani.id) {
+                        <mat-option [value]="ani.id">{{ ani.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matSuffix>pets</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 mt-3">
+                <h3 class="form-section-title">Fechas y Condiciones</h3>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ data.tipo === 'ADOPCION' ? 'Fecha Adopción' : 'Fecha Inicio Acogida' }}</mat-label>
+                    <input matInput type="date" formControlName="fechaInicio">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ data.tipo === 'ADOPCION' ? 'Fecha Salida (Opcional)' : 'Fecha Fin Prevista'
+                        }}</mat-label>
+                    <input matInput type="date" formControlName="fechaFin">
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Observaciones del contrato</mat-label>
+                    <textarea matInput formControlName="observaciones" rows="3"
+                        placeholder="Detalles sobre el contrato, comportamiento, etc."></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="premium-actions">
+        <button type="button" mat-button mat-dialog-close>Cancelar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid"
+            [style.background]="data.tipo === 'ADOPCION' ? 'var(--color-primary)' : 'var(--color-secondary)'">
+            <mat-icon>check</mat-icon>
+            Confirmar {{ data.tipo === 'ADOPCION' ? 'Adopción' : 'Acogida' }}
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,104 @@
+<div class="container-fluid p-1 p-md-4">
+    <header class="page-header">
+        <h1>Gestión de Usuarios</h1>
+        <p>Administración de accesos y roles del personal</p>
+    </header>
+
+    <mat-card class="premium-table-card mb-4">
+        <div class="card-header-actions">
+            <form [formGroup]="form" (submit)="cargarUsuarios()" class="w-100">
+                <div class="header-tools">
+                    <mat-form-field appearance="outline" class="search-field no-label">
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input matInput formControlName="name" placeholder="Buscar por nombre...">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="search-field no-label">
+                        <mat-icon matPrefix>alternate_email</mat-icon>
+                        <input matInput formControlName="email" placeholder="Buscar por email...">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="search-field no-label">
+                        <mat-icon matPrefix>admin_panel_settings</mat-icon>
+                        <mat-select formControlName="role" placeholder="Rol">
+                            <mat-option value="">Todos</mat-option>
+                            @for (role of rolesDisponibles; track role) {
+                            <mat-option [value]="role">{{ role }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="search-field no-label">
+                        <mat-icon matPrefix>verified_user</mat-icon>
+                        <mat-select formControlName="active" placeholder="Estado">
+                            <mat-option value="">Todos</mat-option>
+                            <mat-option value="true">Activos</mat-option>
+                            <mat-option value="false">Inactivos</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-fab color="primary" type="button" (click)="abrirModalUsuario(0)" title="Nuevo Usuario">
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-wrapper">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> EMAIL </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ROL </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="role-badge" [ngClass]="(element.role || element.rol || '').toLowerCase()">
+                            {{element.role || element.rol}}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if (element.active) {
+                        <mat-icon class="text-success">check_circle</mat-icon>
+                        } @else {
+                        <mat-icon class="text-danger">cancel</mat-icon>
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="abrirModalUsuario(element)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button [color]="element.active ? 'warn' : 'primary'" (click)="toggleActivo(element)">
+                            <mat-icon>{{ element.active ? 'block' : 'check_circle' }}</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card>
+</div>

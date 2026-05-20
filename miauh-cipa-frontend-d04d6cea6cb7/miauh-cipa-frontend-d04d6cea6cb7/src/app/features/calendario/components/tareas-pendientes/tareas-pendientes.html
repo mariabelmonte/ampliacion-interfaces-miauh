@@ -1,0 +1,29 @@
+<div class="proximos-eventos-container">
+    <h2>Tareas pendientes</h2>
+    <div class="lista-eventos">
+        @for (evento of tareas(); track evento.id) {
+        <div class="evento-card" [class.is-done]="evento.completado" role="button" tabindex="0"
+            (click)="completarEvento(evento)"
+            (keydown.enter)="completarEvento(evento)"
+            (keydown.space)="completarEvento(evento); $event.preventDefault()"
+            [title]="evento.completado ? 'Marcar como pendiente' : 'Marcar como completada'">
+            <div class="color-tag" [style.backgroundColor]="evento.color"></div>
+
+            <div class="evento-content">
+                <span class="evento-hora">{{ evento.fechaHoraInicio | date: 'dd/MM HH:mm' }}</span>
+                <span class="evento-titulo">{{ evento.titulo }}</span>
+            </div>
+
+            <div class="acciones">
+                <button class="btn-check"
+                    (click)="completarEvento(evento); $event.stopPropagation()"
+                    [title]="evento.completado ? 'Marcar como pendiente' : 'Marcar como completada'">
+                    <mat-icon>{{ evento.completado ? 'undo' : 'done' }}</mat-icon>
+                </button>
+            </div>
+        </div>
+        } @empty {
+        <div class="empty-state">No hay tareas pendientes</div>
+        }
+    </div>
+</div>

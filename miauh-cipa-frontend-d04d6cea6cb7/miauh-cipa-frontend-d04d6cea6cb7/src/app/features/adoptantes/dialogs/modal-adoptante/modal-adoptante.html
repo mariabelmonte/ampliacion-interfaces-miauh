@@ -1,0 +1,131 @@
+<form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="premium-modal-header">
+        <h2 mat-dialog-title>{{ esEdicion() ? 'Editar Perfil' : 'Nuevo Adoptante' }}</h2>
+        <p>Información detallada del adoptante y su ubicación</p>
+    </div>
+
+    <mat-dialog-content class="premium-dialog-content">
+        <div class="row mt-2">
+
+            <div class="col-md-4 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>DNI / NIE</mat-label>
+                    <input matInput formControlName="identificacion" cdkFocusInitial>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput formControlName="apellidos">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput formControlName="telefonoAdoptante">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+            </div>
+            <!-- telefonoSecundario -->
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Teléfono Secundario</mat-label>
+                    <input matInput formControlName="telefonoSecundario">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 mt-2">
+                <h3 class="font-bold mb-3" style="color: var(--color-primary); font-size: 1rem;">
+                    <mat-icon inline>place</mat-icon> Dirección de Residencia
+                </h3>
+            </div>
+
+            <div class="row w-100 m-0 p-0" formGroupName="direccion">
+                <div class="col-md-9 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Calle / Avenida</mat-label>
+                        <input matInput formControlName="via">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nº</mat-label>
+                        <input matInput formControlName="numero">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Piso</mat-label>
+                        <input matInput formControlName="piso">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Bloque</mat-label>
+                        <input matInput formControlName="bloque">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Puerta</mat-label>
+                        <input matInput formControlName="puerta">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>C.P.</mat-label>
+                        <input matInput formControlName="codigoPostal">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Pais</mat-label>
+                        <input matInput formControlName="pais">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Municipio</mat-label>
+                        <input matInput formControlName="municipio">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Provincia</mat-label>
+                        <input matInput formControlName="provincia">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-12 mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Observaciones</mat-label>
+                    <textarea matInput formControlName="observaciones" rows="3"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="premium-actions">
+        <button type="button" mat-button (click)="cancelar()">Descartar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+            <mat-icon>check</mat-icon>
+            {{ esEdicion() ? 'Guardar Cambios' : 'Registrar Persona' }}
+        </button>
+    </mat-dialog-actions>
+</form>

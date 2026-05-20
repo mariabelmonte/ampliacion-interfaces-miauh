@@ -1,0 +1,94 @@
+<div class="container-fluid p-1 p-md-4">
+  <header class="page-header">
+    <h1>Gestión de Tratamientos</h1>
+    <p>Historial clínico y seguimiento médico de los animales</p>
+  </header>
+
+  <div class="row">
+    <div class="col">
+      <mat-card class="premium-table-card">
+        <div class="card-header-actions">
+          <div class="header-tools">
+            <mat-form-field appearance="outline" class="search-field no-label">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput (input)="aplicarFiltro($event)" placeholder="Buscar medicina, dosis o notas...">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="search-field no-label">
+              <mat-icon matPrefix>medical_services</mat-icon>
+              <mat-select placeholder="Tipo" (selectionChange)="aplicarFiltroCampo('tipo', $event.value)">
+                <mat-option value="">Todos</mat-option>
+                @for (tipo of tiposDisponibles; track tipo) {
+                <mat-option [value]="tipo">{{ tipo }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="search-field no-label">
+              <mat-icon matPrefix>event_available</mat-icon>
+              <mat-select placeholder="Estado" (selectionChange)="aplicarFiltroCampo('estado', $event.value)">
+                <mat-option value="">Todos</mat-option>
+                <mat-option value="activo">Activos</mat-option>
+                <mat-option value="finalizado">Finalizados</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <button mat-fab color="primary" (click)="nuevoTratamiento()" title="Añadir nuevo registro">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- Tipo de Tratamiento -->
+            <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+              <td mat-cell *matCellDef="let element" class="font-bold"> {{ tipoTratamiento(element) }} </td>
+            </ng-container>
+
+            <!-- Medicamento -->
+            <ng-container matColumnDef="medicamento">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> MEDICAMENTO </th>
+              <td mat-cell *matCellDef="let element"> {{ nombreTratamiento(element) }} </td>
+            </ng-container>
+
+            <!-- Fecha -->
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA INICIO </th>
+              <td mat-cell *matCellDef="let element"> {{element.fecha | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <!-- Comentarios -->
+            <ng-container matColumnDef="comentarios">
+              <th mat-header-cell *matHeaderCellDef> COMENTARIOS </th>
+              <td mat-cell *matCellDef="let element"> {{ notasTratamiento(element) }} </td>
+            </ng-container>
+
+            <!-- Acciones -->
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element" class="text-end">
+                <button mat-icon-button (click)="verDetalle(element)" class="edit-btn">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell p-4 text-center" colspan="5">
+                No se han encontrado tratamientos registrados.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccionar página"></mat-paginator>
+      </mat-card>
+    </div>
+  </div>
+</div>

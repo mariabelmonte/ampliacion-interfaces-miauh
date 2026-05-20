@@ -1,0 +1,22 @@
+<div class="container-fluid p-1 p-md-4">
+    <header class="page-header">
+        <h1>Calendario de Eventos</h1>
+        <p>Gestiona citas veterinarias, entrevistas de adopción y tareas del refugio.</p>
+    </header>
+
+    <div class="calendario-container">
+        <section #calendarWrapper class="calendar-card overflow-auto" style="max-width: 100%; white-space: nowrap;">
+            <full-calendar #calendar [options]="calendarOptions()"></full-calendar>
+        </section>
+
+        <aside class="tasks-sidebar">
+            <button mat-raised-button color="primary" class="w-100 mb-4 py-4 premium-add-btn" (click)="abrirModalEvento()">
+                <mat-icon>add_circle</mat-icon>
+                <span>NUEVO EVENTO</span>
+            </button>
+            
+            <app-tareas-pendientes [tareas]="store.tareasPendientes()" (onComplete)="alternarTarea($event)">
+            </app-tareas-pendientes>
+        </aside>
+    </div>
+</div>

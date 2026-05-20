@@ -1,0 +1,100 @@
+<mat-card class="premium-table-card">
+  <div class="card-header-actions">
+    <div class="header-tools">
+      <mat-form-field appearance="outline" class="search-field no-label">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (input)="aplicarFiltro($event)" placeholder="Buscar animal o chip...">
+      </mat-form-field>
+
+      @if (mostrarFiltroEspecie) {
+        <mat-form-field appearance="outline" class="search-field no-label">
+          <mat-icon matPrefix>pets</mat-icon>
+          <mat-select placeholder="Especie" (selectionChange)="aplicarFiltroCampo('especie', $event.value)">
+            <mat-option value="">Todas</mat-option>
+            @for (especie of especiesDisponibles; track especie) {
+            <mat-option [value]="especie">{{ especie }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+
+      <mat-form-field appearance="outline" class="search-field no-label">
+        <mat-icon matPrefix>flag</mat-icon>
+        <mat-select placeholder="Estado" (selectionChange)="aplicarFiltroCampo('situacion', $event.value)">
+          <mat-option value="">Todos</mat-option>
+          @for (situacion of situacionesDisponibles; track situacion) {
+          <mat-option [value]="situacion">{{ situacion }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-fab color="primary" (click)="emitirAdd()" [disabled]="deshabilitarAdd" title="Añadir nuevo registro">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <!-- Columnas Dinámicas según el Input -->
+
+      <!-- Nombre -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+        <td mat-cell *matCellDef="let element" class="font-bold"> {{element.nombre}} </td>
+      </ng-container>
+
+      <!-- Raza -->
+      <ng-container matColumnDef="nombreRaza">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> RAZA </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreRaza || 'Desconocida'}} </td>
+      </ng-container>
+
+      <!-- Especie -->
+      <ng-container matColumnDef="nombreEspecie">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ESPECIE </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="badge" [ngClass]="element.nombreEspecie.toLowerCase().split(' ').join('.')">
+            {{element.nombreEspecie}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Estado / Situación -->
+      <ng-container matColumnDef="nombreSituacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTADO </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="badge" [ngClass]="element.nombreSituacion.toLowerCase().split(' ').join('-')">
+            {{element.nombreSituacion}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" class="text-end">
+          <button mat-icon-button (click)="emitirEdit(element)" class="edit-btn">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="emitirSalud(element)" class="health-btn">
+            <mat-icon>medical_services</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+
+      <!-- Fila si no hay datos -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell p-4 text-center" colspan="5">
+          No se han encontrado resultados para la búsqueda.
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccionar página"></mat-paginator>
+</mat-card>

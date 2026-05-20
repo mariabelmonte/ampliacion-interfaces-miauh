@@ -1,0 +1,136 @@
+.proximos-eventos-container {
+    padding: 10px;
+    /* Reduced padding for better fit */
+    background-color: transparent;
+    /* Let the parent set the background */
+    height: 100%;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.evento-card {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: var(--bg-surface);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+.evento-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-tag {
+    flex-shrink: 0;
+    /* Prevents shrinking */
+    width: 4px;
+    height: 32px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.evento-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* Stack time and title for better fit on narrow screens */
+    gap: 2px;
+    min-width: 0;
+    /* Crucial for text-overflow to work */
+}
+
+.evento-hora {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.evento-titulo {
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Truncates long titles */
+}
+
+.acciones {
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.btn-check,
+.btn-delete {
+    border: none;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-check {
+    background: #ecfdf5;
+    color: #10b981;
+}
+
+.btn-check:hover {
+    background: #d1fae5;
+}
+
+.btn-check:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.btn-delete {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-delete:hover {
+    background: #fecaca;
+}
+
+.evento-card.is-done {
+    background-color: var(--bg-base);
+    opacity: 0.7;
+    order: 2;
+    cursor: default;
+    /* Move finished tasks to the bottom */
+}
+
+.evento-card.is-done .evento-titulo {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.lista-eventos {
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-style: italic;
+}

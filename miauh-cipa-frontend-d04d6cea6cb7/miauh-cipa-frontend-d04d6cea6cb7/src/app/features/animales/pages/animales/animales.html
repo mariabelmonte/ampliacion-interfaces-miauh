@@ -1,0 +1,20 @@
+<div class="container-fluid p-1 p-md-4">
+    <!-- Encabezado de página estandarizado -->
+    <header class="page-header">
+        <h1>Animales</h1>
+        <p>Listado general de animales registrados en la protectora</p>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <app-tabla-xanimal 
+                [datos]="store.listaAnimales()" 
+                [cargando]="store.loading()"
+                [columnas]="columnasAnimal"
+                (onEdit)="abrirEditor($event)" 
+                (onSalud)="abrirGestionSalud($event)"
+                (onAdd)="nuevoAnimal()">
+            </app-tabla-xanimal>
+        </div>
+    </div>
+</div>

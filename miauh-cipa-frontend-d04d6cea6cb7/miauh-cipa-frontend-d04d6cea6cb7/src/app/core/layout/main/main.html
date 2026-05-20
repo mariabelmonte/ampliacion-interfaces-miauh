@@ -1,0 +1,74 @@
+@if(keyView() && userView()) {
+<mat-toolbar class="toolbar">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="brand-container" style="display: flex; align-items: center; margin-left: 1rem;">
+    <mat-icon (click)="goToCentral()"
+      style="color: var(--color-primary); font-size: 28px; width: 28px; height: 28px; cursor: pointer;">pets</mat-icon>
+    <span (click)="goToCentral()"
+      style="font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; margin-left: 0.5rem; color: var(--text-main); cursor: pointer;">
+      MIAUH<span style="color: var(--color-primary);">.</span>
+    </span>
+  </div>
+
+  <span class="spacer" style="flex: 1 1 auto;"></span>
+
+  <div class="actions-container" style="display: flex; align-items: center; gap: 1rem;">
+    @let usuarioActual = user();
+    @if (usuarioActual) {
+    <div class="user-summary" style="text-align: right; line-height: 1.2;">
+      <div style="font-weight: 700; color: var(--text-main);">{{ usuarioActual.name || usuarioActual.nombre }}</div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">{{ usuarioActual.email }} - {{ usuarioActual.role || usuarioActual.rol }}</div>
+    </div>
+    }
+    <button mat-icon-button (click)="logout()" title="Cerrar sesion">
+      <mat-icon>logout</mat-icon>
+    </button>
+    <mat-slide-toggle [checked]="isDark()" (change)="onSetTheme($event)">
+      <mat-icon style="margin-right: -4px;">{{ isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </mat-slide-toggle>
+  </div>
+</mat-toolbar>
+
+<mat-drawer-container class="container-base">
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+    <div class="sidebar-header" style="padding: 2rem 1.5rem 1rem;">
+      <p
+        style="text-transform: uppercase; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);">
+        Panel de navegacion
+      </p>
+    </div>
+
+    <mat-tree [dataSource]="menuData()" [childrenAccessor]="childrenAccessor">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <div class="mat-tree-node" (click)="navegar(node)" [class.menu-active]="false">
+          <mat-icon>{{node.icon}}</mat-icon>
+          <span>{{node.name}}</span>
+        </div>
+      </mat-tree-node>
+
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <div class="mat-tree-node parent-node" matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon>{{node.icon}}</mat-icon>
+          <span>{{node.name}}</span>
+          <mat-icon style="margin-left: auto; margin-right: 0; font-size: 18px;">expand_more</mat-icon>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  </mat-drawer>
+
+  <div class="example-sidenav-content" style="width: 100%; height: 100%; overflow-y: auto;">
+    <router-outlet></router-outlet>
+
+    <div class="options footer"
+      style="margin-top: auto; padding: 2rem; border-top: 1px solid var(--border-color); opacity: 0.5;">
+      <div class="caption text-center" style="font-size: 0.8rem;">
+        MIAUH &copy; {{year}} | Trabajo Final de Grado
+      </div>
+    </div>
+  </div>
+</mat-drawer-container>
+<app-spinner></app-spinner>
+}

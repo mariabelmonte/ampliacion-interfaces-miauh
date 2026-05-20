@@ -1,0 +1,22 @@
+
+<div class="container-fluid p-1 p-md-4">
+    <!-- Encabezado de página estandarizado -->
+    <header class="page-header">
+        <h1>Gatos</h1>
+        <p>Gestión y listado de gatos registrados</p>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <app-tabla-xanimal 
+                [datos]="listaGatos()" 
+                [cargando]="cargando()"
+                [columnas]="columnasGato"
+                [mostrarFiltroEspecie]="false"
+                (onEdit)="abrirEditor($event)" 
+                (onSalud)="abrirGestionSalud($event)"
+                (onAdd)="nuevoGato()">
+            </app-tabla-xanimal>
+        </div>
+    </div>
+</div>

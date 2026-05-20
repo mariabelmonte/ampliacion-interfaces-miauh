@@ -1,0 +1,21 @@
+<div class="container-fluid p-1 p-md-4">
+    <!-- Encabezado de página estandarizado -->
+    <header class="page-header">
+        <h1>Perros</h1>
+        <p>Gestión y listado de perros registrados</p>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <app-tabla-xanimal 
+                [datos]="listaPerros()" 
+                [cargando]="cargando()"
+                [columnas]="columnasPerro"
+                [mostrarFiltroEspecie]="false"
+                (onEdit)="abrirEditor($event)" 
+                (onSalud)="abrirGestionSalud($event)"
+                (onAdd)="nuevoPerro()">
+            </app-tabla-xanimal>
+        </div>
+    </div>
+</div>

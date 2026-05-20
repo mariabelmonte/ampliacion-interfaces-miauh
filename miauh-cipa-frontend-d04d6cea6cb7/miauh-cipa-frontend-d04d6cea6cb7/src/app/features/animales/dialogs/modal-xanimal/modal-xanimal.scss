@@ -1,0 +1,56 @@
+
+
+.ppp-warning-box {
+    background: rgba(244, 63, 94, 0.05);
+    border: 2px dashed rgba(244, 63, 94, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-top: 1rem;
+    animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+// Estilo para que los campos se vean más "cuadrados" y proporcionados
+::ng-deep .premium-dialog-content {
+    .premium-tabs {
+        .mat-mdc-tab-header {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+    }
+
+    .clinical-tab {
+        min-height: 320px;
+    }
+
+    .clinical-actions {
+        padding: 0 0 1.25rem 0;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        .form-section-title {
+            margin: 0;
+        }
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none; // Ocultar espacios de error vacíos para compactar el diseño
+    }
+    
+    .mat-mdc-form-field-has-icon .mat-mdc-form-field-subscript-wrapper {
+        display: block; // Mostrar solo si hay algo importante
+    }
+
+    .mat-mdc-text-field-wrapper {
+        background-color: var(--bg-surface) !important;
+    }
+}
