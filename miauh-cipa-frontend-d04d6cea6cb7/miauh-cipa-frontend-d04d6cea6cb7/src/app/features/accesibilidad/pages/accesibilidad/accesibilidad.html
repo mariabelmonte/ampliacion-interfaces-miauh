@@ -1,21 +1,21 @@
-<div class="container-fluid p-1 p-md-4">
+<div class="container-fluid p-1 p-md-4" role="main">
   <!-- Cabecera visible de la pagina: ayuda a orientar al usuario y al lector de pantalla. -->
-  <header class="page-header">
+  <header class="page-header" role="banner">
     <h1>Accesibilidad y ayuda</h1>
     <p>Resumen de las mejoras RA4 aplicadas en MIAUH</p>
   </header>
 
   <!-- Seccion resumen: documenta de forma directa los criterios que pide la rubrica RA4. -->
   <section class="a11y-grid" aria-labelledby="accesibilidad-title">
-    <mat-card class="card-class">
+    <mat-card class="card-class" role="region" aria-labelledby="accesibilidad-title">
       <h2 id="accesibilidad-title">Accesibilidad</h2>
       <div class="criteria-list">
         @for (item of accesibilidad; track item.title) {
         <!-- Cada article agrupa icono, titulo y descripcion como una unidad semantica. -->
-        <article class="criteria-item">
+        <article class="criteria-item" role="article" aria-labelledby="item-title-{{ item.title }}">
           <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
           <div>
-            <h3>{{ item.title }}</h3>
+            <h3 id="item-title-{{ item.title }}">{{ item.title }}</h3>
             <p>{{ item.text }}</p>
           </div>
         </article>
@@ -23,14 +23,14 @@
       </div>
     </mat-card>
 
-    <mat-card class="card-class">
-      <h2>Usabilidad</h2>
+    <mat-card class="card-class" role="region" aria-labelledby="usabilidad-title">
+      <h2 id="usabilidad-title">Usabilidad</h2>
       <div class="criteria-list">
         @for (item of usabilidad; track item.title) {
-        <article class="criteria-item">
+        <article class="criteria-item" role="article" aria-labelledby="item-title-{{ item.title }}">
           <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
           <div>
-            <h3>{{ item.title }}</h3>
+            <h3 id="item-title-{{ item.title }}">{{ item.title }}</h3>
             <p>{{ item.text }}</p>
           </div>
         </article>
@@ -41,7 +41,7 @@
 
   <!-- Cubre el criterio de medios audiovisuales: se ofrece alternativa textual y VTT. -->
   <section class="media-access-card" aria-labelledby="transcripcion-title">
-    <mat-card class="card-class">
+    <mat-card class="card-class" role="region" aria-labelledby="transcripcion-title">
       <div class="media-header">
         <mat-icon aria-hidden="true">closed_caption</mat-icon>
         <div>
@@ -57,7 +57,8 @@
         class="accessible-video"
         controls
         preload="metadata"
-        aria-describedby="video-description">
+        aria-describedby="video-description"
+        aria-label="Video explicativo con subtitulos sincronizados">
         <source src="/media/miauh-guia.mp4" type="video/mp4">
         <!-- Pista de subtitulos en espanol; default la activa por defecto en navegadores compatibles. -->
         <track
@@ -78,31 +79,8 @@
       <div class="transcript" tabindex="0" aria-label="Transcripcion textual del recorrido de uso">
         <p>
           Bienvenida a MIAUH. Desde el dashboard se revisan las cifras principales de la
-          protectora y los proximos eventos del calendario.
-        </p>
-        <p>
-          En Animales se puede buscar por nombre o chip, filtrar por especie o estado, y abrir
-          la ficha para editar datos generales o registrar informacion sanitaria.
-        </p>
-        <p>
-          En Adoptantes se consulta la comunidad de personas responsables, su contacto y el
-          historial de animales vinculados.
-        </p>
-        <p>
-          En Acogidas y Adopciones se registran contratos, fechas y observaciones. En Calendario
-          se gestionan citas y seguimientos con estados de completado.
         </p>
       </div>
-
-      <p class="caption">
-        Si se incorpora un video real, este contenido se usara como transcripcion y el fichero
-        WebVTT de subtitulos se debe vincular con una etiqueta track.
-      </p>
-      <!-- El VTT queda disponible como recurso real para justificar subtitulos en el proyecto. -->
-      <a mat-stroked-button href="/media/miauh-guia.vtt" target="_blank" rel="noopener">
-        <mat-icon aria-hidden="true">subtitles</mat-icon>
-        Ver subtitulos WebVTT
-      </a>
     </mat-card>
   </section>
 </div>

@@ -23,7 +23,7 @@ export class Accesibilidad {
   readonly accesibilidad: ChecklistItem[] = [
     {
       icon: 'contrast',
-      title: 'Contraste, tamanos y espaciados',
+      title: 'Contraste, tamaños y espaciados',
       text: 'Paleta revisada, texto base de 16 px, botones de 44 px y estados visibles de foco.',
     },
     {
